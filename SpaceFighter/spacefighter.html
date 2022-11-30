@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="javascriptreact">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceFighter</title>
+</head>
+<style>
+    #spaceship{
+        position: absolute;
+        bottom: 0px;
+        height: 30px;
+        width: 30px;
+
+        left:400px;
+       
+    }
+    #fire,#engine{
+            visibility: hidden;
+    }
+   #aimPointer{
+    color: white;
+    position: absolute;
+    bottom:50px;
+    left: 400px;
+   }
+   #enemy{
+    position:absolute;
+    top: 32px;
+    left: 0px;
+   }
+    body{
+        background-color: black;
+    }
+</style>
+<body>
+    <img id = "spaceship" src="./spaceship.gif">
+   <div id="fire"></div>
+   <div id="engine"></div>
+   <div id="aimPointer"><h1>+</h1></div>
+   <div id="enemy"></div>
+  
+</body>
+<script>
+let spaceship = document.getElementById("spaceship");
+let spaceshipleft =400;
+let enemyleft =0;
+let aimPointerleft = 400;
+let enemytop = 0;
+let aimPointer = document.getElementById("aimPointer");
+let enemydiv = document.getElementById("enemy").innerHTML = `<img id = "enemy" src = "./enemy.gif "></img>`;
+let enemy = document.getElementById("enemy");
+let aimPointerbottom = 50;
+setInterval(moveenemy,1000);
+let counter = 0;
+function moveenemy(){
+   if(enemyleft>=0 && enemyleft <=1000)
+   {
+    enemyleft+=20;
+    enemy.style.left = enemyleft+'px';
+    enemy.style.top = enemytop+'px';
+   }
+   else if(enemyleft == 1020)
+   {
+    enemyleft=0;
+    enemytop += 50;
+   }
+}
+function move(e){
+  // alert(e.keyCode);
+   if(e.keyCode == 38)
+   {
+    //aim move up
+    aimPointerbottom+=20;
+    aimPointer.style.bottom = aimPointerbottom+'px';
+
+
+   }
+   if(e.keyCode == 40)
+   {
+    //aim move down
+    aimPointerbottom-=20;
+    aimPointer.style.bottom = aimPointerbottom+'px';
+   }
+    if(e.keyCode == 39)
+    {
+        //move right
+        spaceshipleft+=20;
+        aimPointerleft+=20;
+        spaceship.style.left = spaceshipleft+'px';
+        aimPointer.style.left = aimPointerleft+'px';
+
+    }
+    if(e.keyCode == 37)
+    {
+        //move left
+        spaceshipleft-=20;
+        aimPointerleft-=20;
+        spaceship.style.left = spaceshipleft+'px';
+        aimPointer.style.left = aimPointerleft+'px';
+    }
+    if(e.keyCode == 32)
+    {
+        
+        document.getElementById("fire").innerHTML = `<audio src="./fire.mp3" controls autoplay></audio>`;
+        console.log(enemyleft)
+        console.log(aimPointerleft)
+        if(enemyleft == aimPointerleft)
+        {
+
+            enemydiv = document.getElementById("enemy").innerHTML = `<img id = "enemy" src = "./blast.gif "></img>`;
+            
+
+
+        }
+      
+         
+
+        
+    }
+}
+window.onkeydown = move;
+function engine(){
+   //document.getElementById("engine").innerHTML = `<audio src="./engine.mp3" controls autoplay></audio>`;
+}
+window.onload = engine;
+</script>
+</html>
